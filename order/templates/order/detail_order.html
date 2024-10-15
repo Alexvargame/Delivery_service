@@ -1,0 +1,40 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Детализация заказа
+{% endblock %}
+
+
+{% block content %}
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">Номер заказа {{order.order_number}}</li>
+		<li class="list-group-item">Заказчик {{order.orderer.username}}</li>
+		<li class="list-group-item">Доставщик-{{order.deliver}}</a></li>
+  	  	<li class="list-group-item">Офис-{{order.start_point.name}}</li>
+  	  	<li class="list-group-item">Пункт доставки-{{order.delivery_point}}</li>
+		<li class="list-group-item">Дата-{{order.date_created}}</li>
+		<li class="list-group-item">Стоимость доставки-{{order.delivery_cost}}</li>
+		<li class="list-group-item">Статус заказа-{{order.delivery_status}}</li>	
+	  <p>Дополнительная ифнормация</p>
+  	  	<li class="list-group-item">{{order.description}}</li>
+ 	 </ul>
+
+	</div>
+
+	{% if request.user.is_authenticated %}
+		<div class="obj-panel">
+			 <p>Выбрать</p>
+				 {% block obj-panel%}
+					<a class="btn btn-light" href="{{order.get_update_url}}">Редктировать</a>
+					<a class="btn btn-danger" href="{{order.get_delete_url}}">Del</a>
+					<a class="btn btn-light" href="{% url 'list_orders_url'%}">Вернуться к списку</a>
+				 {%endblock%}
+		</div>
+	{% endif%}
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

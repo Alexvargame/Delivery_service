@@ -1,0 +1,222 @@
+﻿{% load static %}
+{% load user_group_tags %}
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js">
+	
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+     <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:450; bottom:50; right:700; left:100; }
+  </style>
+	<title>
+	    {% block title %}
+		Block
+	    {% endblock %}
+	</title>
+	
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'main_url'%}">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    {% if user.is_authenticated and user.is_staff%}
+	<a class="navbar-brand" href="{%url 'main_admin_url'%}">Админ</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+    {%endif%}
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href=""></a>
+        </li>
+          {% if user.is_authenticated   and user|has_group:'Clients'%}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Список заказов
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'list_orders_url'%}">Список</a></li>
+                <li><hr class="dropdown-divider"></li>
+
+                 <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{%url 'create_order_url'%}">Добавить заказ </a></li>
+                    <li><a class="dropdown-item" href="{%url 'search_order_url'%}">Поиск</a></li>
+
+          </ul>
+        </li>
+          {% endif %}
+          {% if user.is_authenticated and user|has_group:'Couriers'%}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список доставок
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'list_deliveres_url' %}">Список</a></li>
+ 	    <li><hr class="dropdown-divider"></li>
+
+	     <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="">Добавить доставку </a></li>
+            <li><a class="dropdown-item" href="{% url 'search_deliveres_url'%}">Поиск</a></li>
+
+          </ul>
+        </li>
+          {% endif %}
+          {% if user.is_authenticated  and user|has_group:'Clients'%}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список адресов
+
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'list_delivery_points_url'%}">Список</a></li>
+ 	    <li><hr class="dropdown-divider"></li>
+
+	     <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'create_delivery_point_url'%}">Добавить адрес </a></li>
+            <li><a class="dropdown-item" href="{% url 'search_delivery_point_url'%}">Поиск</a></li>
+
+          </ul>
+        </li>
+          {% endif %}
+          {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список офисов
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'list_offices_url'%}">Список</a></li>
+ 	    <li><hr class="dropdown-divider"></li>
+
+	     <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'create_office_url'%}">Добавить офис </a></li>
+            <li><a class="dropdown-item" href="{% url 'search_office_url'%}">Поиск</a></li>
+
+          </ul>
+        </li>
+           {% endif %}
+          {% if user.is_authenticated and user.is_staff%}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список клиентов
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'list_clients_url'%}">Список</a></li>
+ 	    <li><hr class="dropdown-divider"></li>
+
+	     <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{%url 'search_users_url' group_name='Clients'  %}">Поиск</a></li>
+
+          </ul>
+        </li>
+          {% endif %}
+          {% if user.is_authenticated and user.is_staff%}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список курьеров
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'list_couriers_url'%}">Список</a></li>
+ 	    <li><hr class="dropdown-divider"></li>
+
+	     <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="">Добавить курьера</a></li>
+            <li><a class="dropdown-item" href="{%url 'search_users_url' group_name='Couriers'  %}">Поиск</a></li>
+
+          </ul>
+        </li>
+         {% endif %}
+          {% if user.is_authenticated and user.is_staff%}
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Отчеты
+                  </a>
+
+                  <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="">Общий</a></li>
+                  <li><hr class="dropdown-divider"></li>
+
+                 <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{%url 'report_offices_url'%}">По офисам</a></li>
+                        <li><a class="dropdown-item" href="{%url 'report_delivery_points_url'%}">По адресам</a></li>
+                        <li><a class="dropdown-item" href="{%url 'report_deliveres_url'%}">По курьерам</a></li>
+                        <li><a class="dropdown-item" href="{%url 'report_orderers_url'%}">По заказчикам</a></li>
+                        <li><a class="dropdown-item" href="{%url 'report_all_orders_url'%}">По периоду времени</a></li>
+
+                  </ul>
+             </li>
+         {% endif %}
+        {% if user.is_authenticated %}
+            	<a class="nav-item nav-link" href="{% url 'profile' %}">Профиль</a>
+            	<a class="nav-item nav-link" href="{% url 'logout' %}">Выход</a>
+        {% else %}
+            	<a class="nav-item nav-link" href="{% url 'login' %}">Вход</a>
+            	<a class="nav-item nav-link" href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+      </ul>
+
+
+      <form class="d-flex" role="search" action="">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+
+
+ 
+
+    </div>
+  </div>
+</nav>
+
+
+ 		{% block content %}
+
+		{% endblock %} 
+
+	
+
+		
+
+ 
+</body>
+</html>

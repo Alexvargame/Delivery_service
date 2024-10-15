@@ -1,0 +1,64 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Редактирование заказа
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 100%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+	
+	<form action="{{order.get_update_url}}" method='post' enctype="multipart/form-data">
+			{% csrf_token %}
+		<div class="form-group">
+			<table style="width:40%">
+				<tr>	
+					<td style="font-size:100%;width:50%" hidden> Номер заказа {{form.order_number}}</td>
+					<td style="font-size:100%;width:50%" hidden> Доставщик {{form.deliver}}</td>
+					<td style="font-size:100%;width:50%" hidden> Стоимость доставки {{form.delivery_cost}}</td>
+					<td style="font-size:100%;width:50%" hidden> Заказчик {{form.orderer}}</td>
+					<td style="font-size:100%;width:50%" hidden> Пункт доставки {{form.delivery_point}}</td>
+					<td style="font-size:100%;width:50%"> Пункт доставки {{form_delivery_point.name}}</td>
+					<td style="font-size:100%;width:50%"> Пункт доставки {{form_delivery_point.city}}</td>
+					<td style="font-size:100%;width:50%"> Пункт доставки {{form_delivery_point.street}}</td>
+					<td style="font-size:100%;width:50%"> Пункт доставки {{form_delivery_point.building}}</td>
+					<td style="font-size:100%;width:50%"> Пункт доставки {{form_delivery_point.office}}</td>
+					
+				</tr>
+			</table>
+			<table style="width:40%">
+				<tr>
+					<td style="font-size:100%;width:50%">Описание {{form.description}}</td>
+
+				</tr>
+			</table>
+		</div>
+
+		
+		<button type="submit" class="btn btn-primary">Изменить</button>
+	</form>
+
+{{message}}
+
+{% endblock %} 
+
+

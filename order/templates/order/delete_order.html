@@ -1,0 +1,20 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Delete
+{% endblock %}
+
+
+{% block content %}
+	<form action="{{order.get_delete_url}}" method='post'>
+		{% csrf_token %}
+	<h3>Вы уверены, что хотите удалить объект?<b>"{{order.id}}"</b></h3>
+	<a href="{{order.get_absolute_url}}">Отменить</a>
+	<button type="submit" class="btn btn-danger">Удалить</button>
+	</form>
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

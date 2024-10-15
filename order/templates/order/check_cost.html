@@ -1,0 +1,60 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Заказы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+
+
+	<p>Рассчитать стоимость доставки</p>
+	Адрес доставки: {{delivery_point_name}}-{{delivery_point_city}}-{{delivery_point_street}}-{{delivery_point_building}}-{{delivery_point_office}}
+	Стоимость доставки: {{cost}}</br>
+	<a class="btn btn-primary" href="{% url 'check_create_order_url' delivery_point_name=delivery_point_name delivery_point_city=delivery_point_city delivery_point_street=delivery_point_street delivery_point_building=delivery_point_building delivery_point_office=delivery_point_office cost=cost%}" role="button">Оформить заказ</a>
+	<form action="{% url 'check_cost_url' %}" style="width:70%" method='get' enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group">
+		<table style="width:40%">
+				<tr>
+					<td style="font-size:100%;width:50%" hidden=""> Адрес офиса {{form.start_point}}</td>
+					<td style="font-size:100%;width:50%"> Название пункта доставки {{form_delivery_point.name}}</td>
+					<td style="font-size:100%;width:50%"> Город пункта доставки {{form_delivery_point.city}}</td>
+					<td style="font-size:100%;width:50%"> Улица пункта доставки {{form_delivery_point.street}}</td>
+					<td style="font-size:100%;width:50%"> Дом пункта доставки {{form_delivery_point.building}}</td>
+					<td style="font-size:100%;width:50%"> Офис пункта доставки {{form_delivery_point.office}}</td>
+				</tr>
+		</table>
+
+
+		</div>
+
+		<button type="submit" class="btn btn-primary">Новый адрес</button>
+
+
+	</form>
+
+
+{% endblock %} 
+

@@ -1,0 +1,20 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Delete
+{% endblock %}
+
+
+{% block content %}
+	<form action="" method='post'>
+		{% csrf_token %}
+	<h3>Изменить статус заказа №<b>"{{delivery.order_number}}"{{form.status}}</b></h3>
+	<a href="{{delivery.get_absolute_url}}">Отменить</a>
+	<button type="submit" class="btn btn-danger">Изменить</button>
+	</form>
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

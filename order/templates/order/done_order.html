@@ -1,0 +1,21 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Done order
+{% endblock %}
+
+
+{% block content %}
+	{{order}}
+	<form action="{% url 'done_order_url' number=order.order_number %}" method='post'>
+		{% csrf_token %}
+	<h3>Вас устраивает стоимость доставки? <b>"{{order.delivery_cost}}"</b> </h3>
+	<a href="{{order.get_delete_url}}">Отменить</a>
+	<button type="submit" class="btn btn-danger">Подтвердить</button>
+	</form>
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

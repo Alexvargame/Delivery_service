@@ -1,0 +1,54 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Заказы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+	<table>
+  		<tr>
+
+   		 <th style="width:5%">Номер</th>
+  		 </tr>
+		
+	{% for order in orderers %}
+	
+		<tr>
+		<td style="font-size:80%"> <a href="{{order.get_absolute_url}}">{{order.order_number}} </a></td>
+
+		 </td>
+		</tr>		
+	  	
+	{%endfor%}
+	
+		
+	</table>
+
+<a class="btn btn-primary" href="{% url 'search_order_url' %}" role="button">Новый поиск</a>
+
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

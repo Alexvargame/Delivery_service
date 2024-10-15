@@ -1,0 +1,79 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Заказы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+	 <details>
+	  <summary>Мои заказы</summary>
+
+		<table>
+			<tr>
+			 <th style="width:2%">I</th>
+			 <th style="width:5%">Номер</th>
+			 </tr>
+
+			{% for order in orders %}
+
+				<tr>
+				<td style="font-size:80%"> <a href="{{order.get_absolute_url}}"> I</a></td>
+				<td style="font-size:80%;">{{order.order_number}}</td>
+				</tr>
+
+			{%endfor%}
+
+		</table>
+		 <p>Всего заказов {{orders|length}} на сумму:{{summary}}</p>
+	 </details>
+
+	<details>
+	<summary> Рассчитать стоимость доставки</summary>
+	
+
+	<form action="{% url 'check_cost_url' %}" style="width:70%" method='get'  enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group">
+		<table style="width:80%">
+				<tr>
+					<td style="font-size:100%;width:50%" hidden> Адрес офиса {{form.start_point}}</td>
+					<td style="font-size:100%;width:30%"> Название пункта доставки {{form_delivery_point.name}}</td>
+					<td style="font-size:100%;width:30%"> Город пункта доставки {{form_delivery_point.city}}</td>
+					<td style="font-size:100%;width:30%"> Улица пункта доставки {{form_delivery_point.street}}</td>
+					<td style="font-size:100%;width:5%"> Дом пункта доставки {{form_delivery_point.building}}</td>
+					<td style="font-size:100%;width:5%"> Офис пункта доставки {{form_delivery_point.office}}</td>
+				</tr>
+		</table>
+
+		</div>
+		<button type="submit" class="btn btn-primary">Рассчитать</button>
+	</form>
+	</details>
+<a class="btn btn-primary" href="{% url 'create_order_url' %}" role="button">Новый заказ</a>
+
+{{s}}
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

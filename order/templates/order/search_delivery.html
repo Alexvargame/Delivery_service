@@ -1,0 +1,68 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Новый заказ
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 100%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+	
+	<form action="{% url 'search_deliveres_url' %}" method='get'>
+			{% csrf_token %}
+		<div class="form-group">
+			<table style="width:100%">
+				<tr>	
+					<td style="font-size:100%;width:5%" > Номер {{form.order_number}}</td>
+					<td style="font-size:100%;width:10%" > Доставщик {{deliver}}</td>
+					<td style="font-size:100%;width:10%" > Заказчик {{form.orderer}}</td>
+					<td style="font-size:100%;width:10%" > Статус {{form.delivery_status}}</td>
+					<td style="font-size:100%;width:10%" > Дата начальная {{form.date_created_b}}</td>
+					<td style="font-size:100%;width:10%" > Дата конечная {{form.date_created_e}}</td>
+
+
+				</tr>
+			</table>
+			<table style="width:100%">
+				<tr>
+					<td style="font-size:100%;width:5%" > Название (офис) {{form.start_point_name}}</td>
+					<td style="font-size:100%;width:5%" > Город (офис) {{form.start_point_city}}</td>
+					<td style="font-size:100%;width:10%" > Улица (офис){{form.start_point_street}}</td>
+					<td style="font-size:100%;width:10%" > Город (адрес) {{form.delivery_point_city}}</td>
+					<td style="font-size:100%;width:10%" > Улица (адрес) {{form.delivery_point_street}}</td>
+					<td style="font-size:100%;width:10%" > От суммы {{form.delivery_cost_min}}</td>
+					<td style="font-size:100%;width:10%" > До суммы {{form.delivery_cost_max}}</td>
+
+				</tr>
+			</table>
+
+		</div>
+
+		
+		<button type="submit" class="btn btn-primary">Найти</button>
+	</form>
+
+{{s}}
+
+{% endblock %} 
+
+

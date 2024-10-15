@@ -1,0 +1,89 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+ 
+{% block title %}
+		
+	О пользователе
+{% endblock %}
+<div class="container mt-5">
+     <div class="row">
+	
+	<div class="col-6 offset-md-2">
+
+	{% block content %}
+
+	<div class="content-section">
+  	<div class="media">
+    	<img class="rounded-circle account-img" src="{{ user.profile.image.url }}" style="width: 100px; height: auto;">
+    	<div class="media-body">
+      	<h2 class="account-heading">{{ user.username }}</h2>
+  	    <p class="text-secondary">{{ user.email }}</p>
+    	</div>
+  	</div>
+  	<form method="POST" enctype="multipart/form-data">
+      	{% csrf_token %}
+        
+      	<fieldset class="form-group">
+		<style="width:50%>
+          	<legend class="border-bottom mb-4">Ваш профиль</legend>
+           
+	   <details>
+	 <summary>Изменить ник или email</summary>
+	   {{u_form }}
+	   </details>
+		<br></br>
+          <div class="card" style="width: 50rem;">
+ 	 <div class="card-header"  > 
+ 	 </div>
+	  <details>
+	  <summary>Личные данные</summary>
+ 	  <ul class="list-group list-group-flush" style="display:inline;">
+	   <li class="list-group-item"  style="width: 30%; height: auto;">Имя {{p_form.name}}</li>
+ 	   <li class="list-group-item"  style="width: 30%; height: auto;">Фамилия{{p_form.sirname}}</li>
+	   <li class="list-group-item"  style="width: 30%; height: auto;">Дата рождения{{p_form.date_birth}}</li>
+	 </ul>
+	 </details>
+	 
+	<details>
+  	   <summary>Телефоны</summary>
+	  <ul class="list-group list-group-flush">
+	   
+	   <li class="list-group-item"  style="width: 20%; height: auto;">{{phone_numbers}}</li>
+	  </br>
+	  <style="width:50%>{{phone_numbers_add}}</style>
+	   	  
+	 
+ 	  </ul>
+	 </details>
+	<details>
+	 <summary>Информация</summary>
+	 <ul class="list-group list-group-flush"> 
+  	  <li class="list-group-item"  >{{p_form.about_user}}</li>
+ 	 </ul>
+	</details>
+	
+	<details>
+	 <summary>Фото</summary>
+	 <ul class="list-group list-group-flush"> 
+  	  <li class="list-group-item"  >{{p_form.image}}</li>
+ 	 </ul>
+	</details>
+	</div>
+      	</fieldset>
+
+      	<div class="form-group">
+          	<button class="btn btn-outline-info" type="submit">Обновить</button>
+      	</div>
+  	</form>
+	</div>	
+	{{s}}
+		
+	{% endblock %} 
+ 	</div>
+       
+    </div>
+ </div>
+
+	        
+<!--<style="width:50%>{{phone_numbers_add}}</style>{flat.get_absolute_urlform|crispy }} {%for w in p_form.phone_number%}{{w}}{%endfor%} <li class="list-group-item"  style="width: 30%; height: auto" >Имя {{p_form.name}}</li><ul class="list-group list-group-flush">-->

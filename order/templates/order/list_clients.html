@@ -1,0 +1,86 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Заказы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 100%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+
+
+			<table>
+				<tr>
+
+					<th style="width:5%">Никнейм</th>
+					<th style="width:5%">Имя</th>
+					<th style="width:5%">Фамилия</th>
+					<th style="width:5%">Дата рождения</th>
+					<th style="width:5%">Телефон</th>
+					<th style="width:5%">Баланс</th>
+					<th style="width:5%">Фото</th>
+					<th style="width:50%">Доставки</th>
+
+				</tr>
+
+			{% for client in clients %}
+
+				<tr>
+					<td style="font-size:80%;">{{client.username}}</td>
+					<td style="font-size:80%;">{{client.profile.name}}</td>
+					<td style="font-size:80%;">{{client.profile.sirname}}</td>
+					<td style="font-size:80%;">{{client.profile.date_birth}}</td>
+					<td style="font-size:80%;">
+						{% for phone in client.get_phone_number%}
+							{{phone}}
+						{%endfor%}
+					</td>
+					<td style="font-size:80%;">{{client.profile.balance}}</td>
+					<td style="font-size:80%;">{{client.profile.image}}</td>
+					<td style="font-size:80%;">
+						 <details>
+							 <summary>Подробнее</summary>
+							 	{% for k,v in clients_dict.items%}
+							 		{% if k == client%}
+										{%for vv in v %}
+							 				<p><a href='{{vv.get_absolute_url}}'>{{vv.order_number}}</a> --{{vv.delivery_point}}-{{vv.date_created}}-{{vv.description}}-{{vv.deliver}}-{{vv.delivery_status}}</p>
+							 			{%endfor%}
+							 		{%endif%}
+								 {%endfor%}
+						 </details>
+					</td>
+				</tr>
+
+			{%endfor%}
+
+
+			</table>
+
+
+	
+<a class="btn btn-primary" href="\" role="button">Новый клиент</a>
+
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

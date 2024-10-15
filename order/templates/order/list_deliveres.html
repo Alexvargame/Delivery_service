@@ -1,0 +1,113 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Заказы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+	 <details>
+		<summary> Доставки в работе</summary>
+			<p>В работе</p>
+			<table>
+					<tr>
+						 <th style="width:2%">I</th>
+						 <th style="width:5%">Номер</th>
+						 <th style="width:5%">Курьер</th>
+					 </tr>
+				{% for dev in deliveres_on_work %}
+					<tr>
+						<td style="font-size:80%"> <a href="{% url 'update_delivery_url' pk=dev.id%}"> I</a></td>
+						<td style="font-size:80%;">{{dev.order_number}}</td>
+						<td style="font-size:80%;">{{dev.deliver}}</td>
+					</tr>
+				{%endfor%}
+			</table>
+		 <p>Всего {{deliveres_on_work|length}} доставок на сумму: {{summary_on_work}} </p>
+	 </details>
+	 <details>
+		<summary> Доставленные</summary>
+
+		<table>
+				<tr>
+					 <th style="width:2%">I</th>
+					 <th style="width:5%">Номер</th>
+					 <th style="width:5%">Курьер</th>
+				 </tr>
+			{% for dev in deliveres_delivered %}
+				<tr>
+					<td style="font-size:80%"> <a href="{% url 'update_delivery_url' pk=dev.id%}"> I</a></td>
+					<td style="font-size:80%;">{{dev.order_number}}</td>
+					<td style="font-size:80%;">{{dev.deliver}}</td>
+
+				</tr>
+			{%endfor%}
+		</table>
+		 <p>Всего {{deliveres_delivered|length}} доставок на сумму: {{summary_delivered}} </p>
+	 </details>
+	 <details>
+		<summary> Доставки отмененные</summary>
+			<table>
+					<tr>
+						 <th style="width:2%">I</th>
+						 <th style="width:5%">Номер</th>
+						 <th style="width:5%">Курьер</th>
+					 </tr>
+				{% for dev in deliveres_canceled %}
+					<tr>
+						<td style="font-size:80%"> <a href="{% url 'update_delivery_url' pk=dev.id%}"> I</a></td>
+						<td style="font-size:80%;">{{dev.order_number}}</td>
+						<td style="font-size:80%;">{{dev.deliver}}</td>
+					</tr>
+				{%endfor%}
+			</table>
+		 <p>Всего {{deliveres_canceled|length}} доставок на сумму: {{summary_canceled}} </p>
+	 </details>
+
+	{% if user.is_staff%}
+	<details>
+	<summary> Выбрать курьеров </summary>
+	
+
+	<form action="{% url 'list_deliveres_url' %}" style="width:70%" method='get' >
+		{% csrf_token %}
+		<div class="form-group">
+		<table style="width:40%">
+				<tr>
+					<td style="font-size:100%;width:50%"> Курьеры {{form.deliver}}</td>
+
+				</tr>
+		</table>
+
+		</div>
+		<button type="submit" class="btn btn-primary">Получить список</button>
+	</form>
+	</details>
+	{% endif%}
+
+
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

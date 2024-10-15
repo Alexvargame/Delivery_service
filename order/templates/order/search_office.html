@@ -1,0 +1,52 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Новый заказ
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 100%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+	
+	<form action="{% url 'search_office_url' %}" method='get'>
+			{% csrf_token %}
+		<div class="form-group">
+			<table style="width:80%">
+				<tr>	
+					<td style="font-size:100%;width:20%" > Название {{form.name}}</td>
+					<td style="font-size:100%;width:30%" > Город {{form.city}}</td>
+					<td style="font-size:100%;width:50%" > Улица {{form.street}}</td>
+
+				</tr>
+			</table>
+
+		</div>
+
+		
+		<button type="submit" class="btn btn-primary">Найти</button>
+	</form>
+
+{{s}}
+
+{% endblock %} 
+
+

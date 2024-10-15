@@ -1,0 +1,99 @@
+﻿
+<header class="header">
+             <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+   <div class="container-fluid">
+     <a class="navbar-brand" href="{% url 'main_menu_url'%}">Home</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+     {% if user.is_authenticated and user.is_staff%}
+	<a class="navbar-brand" href="">Админ</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+       {%endif%}
+
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown"">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Задания</a>
+	   <ul class="dropdown-menu">
+    		<li><a  class="dropdown-item" href="{%url 'tasks_list_url'%}">Список</a></li>
+    	 	<li><a  class="dropdown-item" href="{%url 'task_create_url'%}">Создать новый</a></li>
+    		<li><a  class="dropdown-item" href="{%url 'task_search_url'%}">Искать по параметрам</a></li>
+  	  </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Календарь</a>
+	   <ul class="dropdown-menu">
+    		<li><a class="dropdown-item" href="{% url 'choice_day_url'%}">Выбрать день</a></li>
+    	 	<li><a class="dropdown-item" href="{% url 'create_day_url'%}">Создать новый</a></li>
+    		
+  	  </ul>
+	</li>
+        
+	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Учет расходов</a>
+	   <ul class="dropdown-menu">
+    		<li><a class="dropdown-item" href="{% url 'day_cost_choice_front_url'%}">Выбрать день</a></li>
+		<div class="dropdown-divider"></div>
+    	 	<li><a class="dropdown-item" href="{% url 'category_cost_front_list_url'%}">Категории</a></li>
+		<div class="dropdown-divider"></div>
+		<li style="font-size:100%;"><b>Расходы</b></li>
+		<div class="dropdown-divider"></div>
+		<li><a class="dropdown-item" href="{% url 'costs_front_list_url'%}">Все расходы</a></li>
+		<li><a class="dropdown-item" href="{% url 'cost_front_create_url'%}">Добавить расходы</a></li>
+		<div class="dropdown-divider"></div>
+		<li style="font-size:100%;"><b>Отчеты</b></li>
+		<div class="dropdown-divider"></div>
+		<li><a class="dropdown-item" href="{% url 'report_cost_url'%}">Общий отчет</a></li>
+
+    		
+  	  </ul>
+	</li>
+	
+  	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Учет поступлений</a>
+	   <ul class="dropdown-menu">
+    		<li><a class="dropdown-item" href="{% url 'day_cost_choice_front_url'%}">Выбрать день</a></li>
+		<div class="dropdown-divider"></div>
+		<li style="font-size:100%;"><b>Поступления</b></li>
+		<div class="dropdown-divider"></div>
+		<li><a class="dropdown-item" href="{% url 'addmoneys_front_list_url'%}">Все поступления</a></li>
+		<li><a class="dropdown-item" href="{%url 'addmoney_front_create_url'%}">Добавить поступления</a></li>
+		<div class="dropdown-divider"></div>
+		<li style="font-size:100%;"><b>Отчеты</b></li>
+		<div class="dropdown-divider"></div>
+		<li><a class="dropdown-item" href="{% url 'report_addmoney_url'%}"">Общий отчет</a></li>
+
+    		
+  	  </ul>
+	</li>
+
+	{% if user.is_authenticated %}
+            	<a class="nav-item nav-link" href="{% url 'profile' %}">Профиль</a>
+            	<a class="nav-item nav-link" href="{% url 'logout' %}">Выход</a>
+          	{% else %}
+            	<a class="nav-item nav-link" href="{% url 'login' %}">Вход</a>
+            	<a class="nav-item nav-link" href="{% url 'register' %}">Регистрация</a>
+          	{% endif %}
+ 
+
+     </div>
+   </div>
+	<form class="d-flex" role="search" action="{% url 'search_cost_url' %}">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+
+
+
+
+
+ </nav>
+
+            </header>
+

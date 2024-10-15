@@ -1,0 +1,68 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Отчет по офисам
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+		<form action="{% url 'report_offices_url' %}" style="width:70%" method='get' ">
+			{% csrf_token %}
+			<div class="form-group">
+			<table style="width:60%">
+					<tr>
+						<td style="font-size:100%;width:30%"> Начальная дата {{form.date_b}}</td>
+						<td style="font-size:100%;width:30%"> Конечная дата {{form.date_e}}</td>
+					</tr>
+			</table>
+				<button type="submit" class="btn btn-primary">Рассчитать</button>
+			</div>
+
+		</form>
+
+		<table>
+			<tr>
+				 <th style="width:2%">Офис</th>
+				 <th style="width:5%">Кол-во доставленных заказов</th>
+				 <th style="width:5%">Сумма </th>
+
+			 </tr>
+
+
+
+			{% for key,value in result_dict.items %}
+
+				<tr>
+					<td style="font-size:80%"> <a href="{{key.get_absolute_url}}"> {{key.name}}</a></td>
+					<td style="font-size:80%;">{{value.0|length}}</td>
+					<td style="font-size:80%;">{{value.1}}</td>
+				</tr>
+			{%endfor%}
+		</table>
+
+<a class="btn btn-primary" href="{% url 'report_offices_url' %}" role="button">Новый отчет</a>
+
+{{s}}
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

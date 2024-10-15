@@ -1,0 +1,51 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Новый заказ
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 100%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+	
+	<form action="{% url 'search_users_url' group_name='Clients' %}" method='get'>
+			{% csrf_token %}
+		<div class="form-group">
+			<table style="width:40%">
+				<tr>
+					<td style="font-size:100%;width:50%" hidden> Группа {{form.groups}}</td>
+					<td style="font-size:100%;width:50%" > Введите имя {{form.username}}</td>
+
+				</tr>
+			</table>
+
+		</div>
+
+		
+		<button type="submit" class="btn btn-primary">Сохранить</button>
+	</form>
+
+{{s}}
+
+{% endblock %} 
+
+

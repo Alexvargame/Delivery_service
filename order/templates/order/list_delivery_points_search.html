@@ -1,0 +1,60 @@
+﻿{% extends 'order/order_base.html'%}
+
+<h1 xmlns="http://www.w3.org/1999/html">HI</h1>
+ 
+{% block title %}
+		
+	Офисы
+{% endblock %}
+
+
+{% block content %}
+	<style>
+		table {
+ 		 font-family: arial, sans-serif;
+ 		 border-collapse: collapse;
+ 		 width: 40%;
+		}
+
+		td, th {
+  		border: 1px solid #dddddd;
+  		text-align: left;
+  		padding: 8px;
+		}
+
+		tr:nth-child(even) {
+  		background-color: #dddddd;
+		}
+	</style>
+
+	<table>
+  		<tr>
+   			 <th style="width:5%">Название</th>
+			 <th style="width:5%">Город</th>
+			 <th style="width:5%">Улица</th>
+			 <th style="width:5%">Номер дома</th>
+			 <th style="width:5%">Номер офиса</th>
+  		 </tr>
+		
+	{% for dev_point in delivery_points %}
+	
+		<tr>
+			<td style="font-size:80%"> <a href="{{dev_point.get_absolute_url}}"> {{dev_point.name}}</a></td>
+			<td style="font-size:80%;">{{dev_point.city}}</td>
+			<td style="font-size:80%;">{{dev_point.street}}</td>
+			<td style="font-size:80%;">{{dev_point.building}}</td>
+			<td style="font-size:80%;">{{dev_point.office}}</td>
+		</tr>		
+	  	
+	{%endfor%}
+	
+		
+	</table>
+
+
+<a class="btn btn-primary" href="{% url 'search_delivery_point_url' %}" role="button">Новый поиск</a>
+
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->

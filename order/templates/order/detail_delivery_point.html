@@ -1,0 +1,43 @@
+﻿{% extends 'order/order_base.html'%}
+ 
+	<h1>HI</h1>
+ 
+{% block title %}
+		
+	Детализация заказа
+{% endblock %}
+
+
+{% block content %}
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">Название {{dev_p.name}}</li>
+		<li class="list-group-item">Город {{dev_p.city}}</li>
+		<li class="list-group-item">Улица-{{dev_p.street}}</a></li>
+  	  	<li class="list-group-item">Дом-{{dev_p.building}}</li>
+  	  	<li class="list-group-item">Номер офиса-{{dev_p.office}}</li>
+		<li class="list-group-item">Выполненных доставок: {{dev_p.get_count_delivered_orders|length}} на сумму: {{dev_p.get_sum_delivered_orders}}</br>
+									Отмененных доставок: {{dev_p.get_count_canceled_orders|length}} на сумму: {{dev_p.get_sum_canceled_orders}}</br>
+									В работе доставок:{{dev_p.get_count_on_work_orders|length}} на сумму: {{dev_p.get_sum_on_work_orders}}</br>
+									</br>
+									Кол-во доставок всего-{{dev_p.get_count_all_orders|length}} на сумму: {{dev_p.get_sum_all_orders}}</li>
+		<li class="list-group-item">Список заказчиков-{%for person in dev_p.get_orderers%}<a href="{{person.profile.user.get_absolute_url}}"> {{person.username}}, </a>{%endfor%}</li>
+
+	{{s}} {{dev_p_dict.delivered|length}}
+ 	 </ul>
+
+	</div>
+
+	{% if request.user.is_authenticated %}
+		<div class="obj-panel">
+			 <p>Выбрать</p>
+				 {% block obj-panel%}
+					<a class="btn btn-light" href="">Редктировать</a>
+					<a class="btn btn-danger" href="">Del</a>
+					<a class="btn btn-light" href="{% url 'list_offices_url'%}">Вернуться к списку</a>
+				 {%endblock%}
+		</div>
+	{% endif%}
+
+{% endblock %} 
+
+<!--{flat.get_absolute_url}-->
